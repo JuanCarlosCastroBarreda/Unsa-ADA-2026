@@ -53,27 +53,29 @@ double medir_tiempo(int (*func)()) {
     chrono::duration<double, milli> tiempo = fin - inicio;
     return tiempo.count();
 }
+
 int main(){
-    cout << "Tamano de la lista: ";
-    cin >> n;
-    L = new int[n];
+
     random_device rd;
     mt19937 gen(rd());
 
     uniform_int_distribution<int> distribucion(-5000, 5000);
 
-    for (int i = 0; i < n; i++) {
-        L[i] = distribucion(gen);
-    }
+    int tam[] = {1000, 2000, 4000, 8000};
 
-    cout<<"Lista: ";
-    for(int i=0;i<n;i++){
-        cout<<L[i];
-        if(i+1<n) cout<<" ";
+    cout<<"Tabla de resultados:"<<endl;
+    cout << "n\t\tO(n^3)\t\tO(n^2)\t\tO(n)" << endl;
+    for(int i=0; i<4; i++){
+        n = tam[i];
+        L = new int[n];
+        for (int j = 0; j < n; j++) {
+            L[j] = distribucion(gen);
+        }
+        double tiempo_n_cubico = medir_tiempo(n_cubico);
+        double tiempo_n_cuadratico = medir_tiempo(n_cuadratico);
+        double tiempo_n_lineal = medir_tiempo(n_lineal);
+
+        cout<<n<<"\t\t"<< tiempo_n_cubico << " ms\t"<<tiempo_n_cuadratico <<" ms\t"<<tiempo_n_lineal<<" ms"<< endl;
     }
-    cout<<endl;
-    cout<<"Resultado del subarreglo maximo en n cúbico: "<<n_cubico()<<"  Tiempo: "<<medir_tiempo(n_cubico)<<" ms"<<endl;
-    cout<<"Resultado del subarreglo maximo en n cuadrático: "<<n_cuadratico()<<"  Tiempo: "<<medir_tiempo(n_cuadratico)<<" ms"<<endl;
-    cout<<"Resultado del subarreglo maximo en n lineal: "<<n_lineal()<<"  Tiempo: "<<medir_tiempo(n_lineal)<<" ms"<<endl;
     return 0;
 }
