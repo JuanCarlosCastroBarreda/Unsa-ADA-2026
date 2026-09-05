@@ -54,12 +54,18 @@ double medir_tiempo(int (*func)()) {
     return tiempo.count();
 }
 int main(){
-    n = 6;
+    cout << "Tamano de la lista: ";
+    cin >> n;
     L = new int[n];
-    int Lista[] = {10, 0, -8, 5, 19, -1};
-    for(int i=0;i<n;i++){
-        L[i]=Lista[i];
+    random_device rd;
+    mt19937 gen(rd());
+
+    uniform_int_distribution<int> distribucion(-5000, 5000);
+
+    for (int i = 0; i < n; i++) {
+        L[i] = distribucion(gen);
     }
+
     cout<<"Lista: ";
     for(int i=0;i<n;i++){
         cout<<L[i];
