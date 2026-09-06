@@ -46,9 +46,9 @@ int n_lineal(){
     return global;
 }
 
-double medir_tiempo(int (*func)()) {
+double medir_tiempo(int (*func)(), int &(resultado)) {
     auto inicio = chrono::high_resolution_clock::now();
-    func();
+    resultado = func();
     auto fin = chrono::high_resolution_clock::now();
     chrono::duration<double, milli> tiempo = fin - inicio;
     return tiempo.count();
@@ -62,20 +62,24 @@ int main(){
     uniform_int_distribution<int> distribucion(-5000, 5000);
 
     int tam[] = {1000, 2000, 4000, 8000};
+    int resultado_cubico, resultado_cuadratico, resultado_lineal;
 
     cout<<"Tabla de resultados:"<<endl;
-    cout << "n\t\tO(n^3)\t\tO(n^2)\t\tO(n)" << endl;
+    cout << "n\t\tSuma O(n^3)\tTiempo O(n^3)"<<"\t\tSuma O(n^2)\tTiempo O(n^2)"<<"\t\tSuma O(n)\tTiempo O(n)" << endl;
     for(int i=0; i<4; i++){
         n = tam[i];
         L = new int[n];
         for (int j = 0; j < n; j++) {
             L[j] = distribucion(gen);
         }
-        double tiempo_n_cubico = medir_tiempo(n_cubico);
-        double tiempo_n_cuadratico = medir_tiempo(n_cuadratico);
-        double tiempo_n_lineal = medir_tiempo(n_lineal);
+        double tiempo_n_cubico = medir_tiempo(n_cubico, resultado_cubico);
+        double tiempo_n_cuadratico = medir_tiempo(n_cuadratico, resultado_cuadratico);
+        double tiempo_n_lineal = medir_tiempo(n_lineal, resultado_lineal);
 
-        cout<<n<<"\t\t"<< tiempo_n_cubico << " ms\t"<<tiempo_n_cuadratico <<" ms\t"<<tiempo_n_lineal<<" ms"<< endl;
+        cout<<n<<"\t\t"<< resultado_cubico <<"\t\t"<< tiempo_n_cubico <<" ms\t\t"
+        << resultado_cuadratico <<"\t\t"<< tiempo_n_cuadratico <<" ms\t\t"
+        << resultado_lineal <<"\t\t"<< tiempo_n_lineal<<" ms"<<endl;
+
     }
     return 0;
 }
