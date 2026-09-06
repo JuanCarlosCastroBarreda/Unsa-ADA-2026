@@ -1,6 +1,6 @@
 # Unsa-ADA-2026
 Repositorio para el curso de Analisis y Diseño de Algoritmos
-
+    #Lenaguaje C++
     #Componentes usados en la ejecucion de los archivos
         -Laptop: HP Victus 
         -Procesador: 13th Gen Intel(R) Core(TM) i5-13420H
